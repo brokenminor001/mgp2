@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -39,6 +41,8 @@ type Updatepost struct {
 
 var text string
 var Finaltext string
+var FileName string
+var Attach bool = false
 
 func getmsg() {
 
@@ -132,16 +136,34 @@ func getmsg() {
 		case *mail.InlineHeader:
 			// This is the message's text (can be plain-text or HTML)
 			b, _ := ioutil.ReadAll(p.Body)
-			log.Println("Got text: %v", string(b))
+
 			text = string(b)
 
 		case *mail.AttachmentHeader:
 			// This is an attachment
 			filename, _ := h.Filename()
-			log.Println("Got attachment: %v", filename)
+
+			output, err := os.Create(filename)
+			if err != nil {
+				fmt.Println("Error while creating", "-", err)
+			}
+			defer output.Close()
+			//--------------
+
+			//записываем байты в файл
+			_, err = io.Copy(output, p.Body)
+			if err != nil {
+				fmt.Println("Error while downloading", "-", err)
+
+			}
+			Attach = true
+			FileName = filename
 		}
 
 	}
+
+	fmt.Print(FileName)
+	fmt.Print(FileName)
 
 	updstsone := strings.Split(subject, "/")
 	updsts := updstsone[0]
@@ -166,28 +188,47 @@ func getmsg() {
 		var compare bool = ticketid != tic
 
 		if compare == true {
-			dbconnect.Insertnewticket(tic)
-			themetextone := parts[12]
-			fmt.Print(themetextone)
-			themetexttwo := strings.Split(themetextone, "Серийный номер")
-			fmt.Print(themetexttwo)
-			var themetext string = themetexttwo[0]
-			serialone := parts[13]
-			serialtwo := strings.Split(serialone, "Требуется диагностика и список ЗИП для возможного ремонта?")
-			var finaltext string = themetext + "\n" + "Серийный номер:" + serialtwo[0]
-			fmt.Print(themetext)
-			var post = Newpost{subject, finaltext, "189"}
-			data, err := json.Marshal(post)
-			fmt.Println(string(data))
+			if Attach == false {
+				dbconnect.Insertnewticket(tic)
+				themetextone := parts[12]
+				fmt.Print(themetextone)
+				themetexttwo := strings.Split(themetextone, "Серийный номер")
+				fmt.Print(themetexttwo)
+				var themetext string = themetexttwo[0]
+				serialone := parts[13]
+				serialtwo := strings.Split(serialone, "Требуется диагностика и список ЗИП для возможного ремонта?")
+				var finaltext string = themetext + "\n" + "Серийный номер:" + serialtwo[0]
 
-			r := bytes.NewBuffer(data)
-			resp, err := http.Post("https://soyuzintegro.okdesk.ru/api/v1/issues/?api_token=5683dfe9931d8e891acb4943a76bde8fc2edeada", "application/json", r)
-			fmt.Printf("%v %v", err, resp)
-			log.Print("no new tickets")
-			sendmail.Sendassigned(ticketid)
-			//time.Sleep(30 * time.Second)
-			var id string = mgp.GetNewTicketID()
-			dbconnect.InsertnewticketID(id, tic)
+				var post = Newpost{subject, finaltext, "189"}
+				data, err := json.Marshal(post)
+				fmt.Println(string(data))
+
+				r := bytes.NewBuffer(data)
+				resp, err := http.Post("https://soyuzintegro.okdesk.ru/api/v1/issues/?api_token=5683dfe9931d8e891acb4943a76bde8fc2edeada", "application/json", r)
+				fmt.Printf("%v %v", err, resp)
+				log.Print("no new tickets")
+				sendmail.Sendassigned(ticketid)
+				//time.Sleep(30 * time.Second)
+				var id string = mgp.GetNewTicketID()
+				dbconnect.InsertnewticketID(id, tic)
+			}
+			if Attach == true {
+				dbconnect.Insertnewticket(tic)
+				themetextone := parts[12]
+				fmt.Print(themetextone)
+				themetexttwo := strings.Split(themetextone, "Серийный номер")
+				fmt.Print(themetexttwo)
+				var themetext string = themetexttwo[0]
+				serialone := parts[13]
+				serialtwo := strings.Split(serialone, "Требуется диагностика и список ЗИП для возможного ремонта?")
+				var finaltext string = themetext + "\n" + "Серийный номер:" + serialtwo[0]
+
+				cmd := exec.Command("curl", "-H", "ontent-Type: multipart/form-data", "-F", "issue[title]="+subject, "-F", "issue[company_id]=189", "-F", "issue[description]="+finaltext, "-F", "issue[attachments][0][attachment]=@/go/"+FileName, "https://soyuzintegro.okdesk.ru/api/v1/issues/?api_token=5683dfe9931d8e891acb4943a76bde8fc2edeada")
+
+				cmd.Run()
+
+			}
+
 		} else {
 			fmt.Print("no new tickets")
 
@@ -257,17 +298,8 @@ func period() {
 	}
 }
 
-// func statusperiod() {
-// 	for {
-
-// 		status()
-// 		time.Sleep(120 * time.Second)
-// 	}
-
-// }
-
 func main() {
 
 	period()
-	//statusperiod()
+
 }

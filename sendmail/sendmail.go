@@ -10,7 +10,7 @@ func Sendassigned(ticket string) {
 	m.SetHeader("From", "megapolis@soyuzintegro.ru")
 	m.SetHeader("To", "asmolin@soyuzintegro.ru")
 	m.SetHeader("Subject", "Incident/"+ticket+"/Assigned\r\n\r\n")
-	m.SetBody("text/plain", "<incident><number>"+ticket+"</number><nameCharge>Богданова Светлана</nameCharge><phoneCharge>+7 (900) 500-00-00</phoneCharge></incident>\r\n")
+	m.SetBody("text/plain", "<incident><number>"+ticket+"</number><nameCharge>АутсорсСоюзинтегро</nameCharge><phoneCharge>+7 (900) 500-00-00</phoneCharge></incident>\r\n")
 
 	// Send the email to Bob
 	d := gomail.NewPlainDialer("mail.soyuzintegro.ru", 25, "asmolin@soyuzintegro.ru", "Oadnpvia04!!")
