@@ -281,6 +281,7 @@ func status() {
 		var check string = "1"
 		if statuscheck == check {
 			sendmail.SendEndWork(tic_id)
+			dbconnect.UpdateStatusTwo(okdesk_id)
 		}
 	} else {
 
