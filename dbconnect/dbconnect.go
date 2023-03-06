@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	host     = "172.17.0.3"
+	host     = "172.17.0.2"
 	port     = 5432
 	user     = "asmolin"
 	password = "oadnpvia"
@@ -145,6 +145,25 @@ func UpdateStatusOne(okdeskid string) {
 	defer db.Close()
 
 	result, err := db.Exec("update tickets set status='1' where okdesk_id=$1",
+		okdeskid)
+	if err != nil {
+		panic(err)
+	}
+	log.Print(result)
+}
+
+func UpdateStatusTwo(okdeskid string) {
+	connectionstring := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+
+	db, err := sql.Open("postgres", connectionstring)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	result, err := db.Exec("update tickets set status='2' where okdesk_id=$1",
 		okdeskid)
 	if err != nil {
 		panic(err)

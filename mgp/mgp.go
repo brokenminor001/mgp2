@@ -17,7 +17,7 @@ func GetNewTicketID() string {
 
 	time.Sleep(15 * time.Second)
 	// Connect to server
-	c, err := client.DialTLS("mail.soyuzintegro.ru:993", nil)
+	c, err := client.DialTLS("imap.gmail.com:993", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func GetNewTicketID() string {
 	defer c.Logout()
 
 	// Login
-	if err := c.Login("mgp@soyuzintegro.ru", "q9C8MXYQYgaT"); err != nil {
+	if err := c.Login("brokenminor0411@gmail.com", "xuqjaqgrsbzetfjz"); err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Logged in")
@@ -128,7 +128,7 @@ func GetNewTicketID() string {
 }
 func GetStatus() string {
 	// Connect to server
-	c, err := client.DialTLS("mail.soyuzintegro.ru:993", nil)
+	c, err := client.DialTLS("imap.gmail.com:993", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -138,7 +138,7 @@ func GetStatus() string {
 	defer c.Logout()
 
 	// Login
-	if err := c.Login("mgp@soyuzintegro.ru", "q9C8MXYQYgaT"); err != nil {
+	if err := c.Login("brokenminor0411@gmail.com", "xuqjaqgrsbzetfjz"); err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Logged in")

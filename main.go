@@ -47,7 +47,8 @@ var Attach bool = false
 func getmsg() {
 
 	// Connect to server
-	c, err := client.DialTLS("mail.soyuzintegro.ru:993", nil)
+
+	c, err := client.DialTLS("imap.yandex.ru:993", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,7 +58,7 @@ func getmsg() {
 	defer c.Logout()
 
 	// Login
-	if err := c.Login("megapolis@soyuzintegro.ru", "16xZZBJFbj38"); err != nil {
+	if err := c.Login("brokenminor001@yandex.ru", "skgvdtxrafxjebxc"); err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Logged in")
@@ -199,7 +200,7 @@ func getmsg() {
 				serialtwo := strings.Split(serialone, "Требуется диагностика и список ЗИП для возможного ремонта?")
 				var finaltext string = themetext + "\n" + "Серийный номер:" + serialtwo[0]
 
-				var post = Newpost{subject, finaltext, "189"}
+				var post = Newpost{subject, finaltext, "22"}
 				data, err := json.Marshal(post)
 				fmt.Println(string(data))
 
@@ -223,7 +224,7 @@ func getmsg() {
 				serialtwo := strings.Split(serialone, "Требуется диагностика и список ЗИП для возможного ремонта?")
 				var finaltext string = themetext + "\n" + "Серийный номер:" + serialtwo[0]
 
-				cmd := exec.Command("curl", "-H", "ontent-Type: multipart/form-data", "-F", "issue[title]="+subject, "-F", "issue[company_id]=189", "-F", "issue[description]="+finaltext, "-F", "issue[attachments][0][attachment]=@/go/"+FileName, "https://soyuzintegro.okdesk.ru/api/v1/issues/?api_token=5683dfe9931d8e891acb4943a76bde8fc2edeada")
+				cmd := exec.Command("curl", "-H", "ontent-Type: multipart/form-data", "-F", "issue[title]="+subject, "-F", "issue[company_id]=22", "-F", "issue[description]="+finaltext, "-F", "issue[attachments][0][attachment]=@/go/"+FileName, "https://soyuzintegro.okdesk.ru/api/v1/issues/?api_token=5683dfe9931d8e891acb4943a76bde8fc2edeada")
 
 				cmd.Run()
 
@@ -275,12 +276,14 @@ func status() {
 		}
 
 	} else if status == endwork {
+		fmt.Print("ENDWORK!!!!")
 		var okdesk_id string = mgp.GetNewTicketID()
 		var tic_id string = dbconnect.SelectTicketById(okdesk_id)
 		var statuscheck string = dbconnect.GetStatusID(okdesk_id)
 		var check string = "1"
 		if statuscheck == check {
 			sendmail.SendEndWork(tic_id)
+			dbconnect.UpdateStatusTwo(okdesk_id)
 		}
 	} else {
 
