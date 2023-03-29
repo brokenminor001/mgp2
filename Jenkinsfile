@@ -16,6 +16,7 @@ pipeline {
         sh 'git clone https://github.com/brokenminor001/mgp2.git'
         
       }
+    }
        stage('Push images') {
       agent any
       when {
@@ -34,6 +35,6 @@ pipeline {
       }
     }
       
-    }
+  }
   }
 }
