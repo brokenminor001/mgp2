@@ -1,19 +1,19 @@
 pipeline {
-  environment {
+  environment {cd ../
     IMAGE_BASE = 'asmolin/mgp'
     IMAGE_TAG = "1.0.0"
     IMAGE_NAME = "${env.IMAGE_BASE}:${env.IMAGE_TAG}"
     IMAGE_NAME_LATEST = "${env.IMAGE_BASE}:latest"
     DOCKERFILE_NAME = "Dockerfile"
 
-  
+  }
   agent any
   tools { go '1.20' }
   stages {
     stage('Build') {
       steps {
         checkout scm
-        sh 'git clone https://github.com/brokenminor001/mgp2.git'
+        sh 'go buid main.go'
         
       }
     }
@@ -37,4 +37,3 @@ pipeline {
       
   }
   }
-}
