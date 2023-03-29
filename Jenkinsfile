@@ -13,7 +13,7 @@ pipeline {
     stage('Build') {
       steps {
         checkout scm
-        sh 'go buid main.go'
+        sh 'go build main.go'
         
       }
     }
