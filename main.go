@@ -13,9 +13,10 @@ import (
 	"strings"
 	"time"
 
-	"./dbconnect"
-	"./mgp"
-	"./sendmail"
+	"dbconnect"
+	"mgp"
+	"sendmail"
+
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
@@ -124,6 +125,7 @@ func getmsg() {
 	}
 
 	// Process each message's part
+
 	for {
 		p, err := mr.NextPart()
 		if err == io.EOF {
