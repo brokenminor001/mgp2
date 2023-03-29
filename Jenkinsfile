@@ -1,5 +1,5 @@
 pipeline {
-  environment {cd ../
+  environment {
     IMAGE_BASE = 'asmolin/mgp'
     IMAGE_TAG = "1.0.0"
     IMAGE_NAME = "${env.IMAGE_BASE}:${env.IMAGE_TAG}"
