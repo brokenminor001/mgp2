@@ -24,7 +24,7 @@ pipeline {
       steps {
         script {
           def dockerImage = docker.build("${env.IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
-          docker.withRegistry('', 'dockerhub-creds') {
+          docker.withRegistry('', 'dockerhub') {
             dockerImage.push()
             dockerImage.push("latest")
           }
