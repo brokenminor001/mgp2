@@ -1,7 +1,6 @@
 package mgp
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -30,14 +29,14 @@ func GetNewTicketID() string {
 	if err := c.Login("brokenminor0411@gmail.com", "xuqjaqgrsbzetfjz"); err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Logged in")
+	//log.Println("Logged in")
 
 	// Select INBOX
 	mbox, err := c.Select("INBOX", false)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Flags for INBOX:", mbox.Flags)
+	//log.Println("Flags for INBOX:", mbox.Flags)
 
 	// Get the last message
 	if mbox.Messages == 0 {
@@ -75,19 +74,19 @@ func GetNewTicketID() string {
 
 	// Print some info about the message
 	header := mr.Header
-	if date, err := header.Date(); err == nil {
-		log.Println("Date:", date)
-	}
-	if from, err := header.AddressList("From"); err == nil {
-		log.Println("From:", from)
-	}
-	if to, err := header.AddressList("To"); err == nil {
-		log.Println("To:", to)
-	}
-	if subject, err := header.Subject(); err == nil {
-		log.Println("Subject:", subject)
+	// if date, err := header.Date(); err == nil {
+	// 	log.Println("Date:", date)
+	// }
+	// if from, err := header.AddressList("From"); err == nil {
+	// 	log.Println("From:", from)
+	// }
+	// if to, err := header.AddressList("To"); err == nil {
+	// 	log.Println("To:", to)
+	// }
+	// if subject, err := header.Subject(); err == nil {
+	// 	log.Println("Subject:", subject)
 
-	}
+	// }
 	subject, err := header.Subject()
 	if err != nil {
 		log.Fatal(err)
@@ -122,7 +121,7 @@ func GetNewTicketID() string {
 	partsfour := partsthree[1]
 	partsfive := strings.Split(partsfour, ":")
 	ticketid := partsfive[1]
-	fmt.Print(ticketid)
+	//fmt.Print(ticketid)
 	return ticketid
 
 }
@@ -132,7 +131,7 @@ func GetStatus() string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Connected")
+	//log.Println("Connected")
 
 	// Don't forget to logout
 	defer c.Logout()
@@ -141,14 +140,14 @@ func GetStatus() string {
 	if err := c.Login("brokenminor0411@gmail.com", "xuqjaqgrsbzetfjz"); err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Logged in")
+	//log.Println("Logged in")
 
 	// Select INBOX
 	mbox, err := c.Select("INBOX", false)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Flags for INBOX:", mbox.Flags)
+	//log.Println("Flags for INBOX:", mbox.Flags)
 
 	// Get the last message
 	if mbox.Messages == 0 {
@@ -186,19 +185,19 @@ func GetStatus() string {
 
 	// Print some info about the message
 	header := mr.Header
-	if date, err := header.Date(); err == nil {
-		log.Println("Date:", date)
-	}
-	if from, err := header.AddressList("From"); err == nil {
-		log.Println("From:", from)
-	}
-	if to, err := header.AddressList("To"); err == nil {
-		log.Println("To:", to)
-	}
-	if subject, err := header.Subject(); err == nil {
-		log.Println("Subject:", subject)
+	// if date, err := header.Date(); err == nil {
+	// 	log.Println("Date:", date)
+	// }
+	// if from, err := header.AddressList("From"); err == nil {
+	// 	log.Println("From:", from)
+	// }
+	// if to, err := header.AddressList("To"); err == nil {
+	// 	log.Println("To:", to)
+	// }
+	// if subject, err := header.Subject(); err == nil {
+	// 	log.Println("Subject:", subject)
 
-	}
+	// }
 	subject, err := header.Subject()
 	if err != nil {
 		log.Fatal(err)

@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"./dbconnect"
-	"./mgp"
-	"./sendmail"
+	"github.com/brokenminor001/mgp2/dbconnect"
+	"github.com/brokenminor001/mgp2/mgp"
+	"github.com/brokenminor001/mgp2/sendmail"
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 	"github.com/emersion/go-message/mail"
@@ -106,19 +106,19 @@ func getmsg() {
 
 	// Print some info about the message
 	header := mr.Header
-	if date, err := header.Date(); err == nil {
-		log.Println("Date:", date)
-	}
-	if from, err := header.AddressList("From"); err == nil {
-		log.Println("From:", from)
-	}
-	if to, err := header.AddressList("To"); err == nil {
-		log.Println("To:", to)
-	}
-	if subject, err := header.Subject(); err == nil {
-		log.Println("Subject:", subject)
+	// if date, err := header.Date(); err == nil {
+	// 	log.Println("Date:", date)
+	// }
+	// if from, err := header.AddressList("From"); err == nil {
+	// 	log.Println("From:", from)
+	// }
+	// if to, err := header.AddressList("To"); err == nil {
+	// 	log.Println("To:", to)
+	// }
+	// if subject, err := header.Subject(); err == nil {
+	// 	log.Println("Subject:", subject)
 
-	}
+	// }
 	subject, err := header.Subject()
 	if err != nil {
 		log.Fatal(err)
