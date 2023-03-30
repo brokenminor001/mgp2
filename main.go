@@ -13,9 +13,10 @@ import (
 	"strings"
 	"time"
 
-	"dbconnect"
-	"mgp"
-	"sendmail"
+	"/dbconnect"
+
+	"./mgp"
+	"./sendmail"
 
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
