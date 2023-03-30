@@ -13,8 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"/dbconnect"
-
+	"./dbconnect"
 	"./mgp"
 	"./sendmail"
 
