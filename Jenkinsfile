@@ -13,7 +13,7 @@ pipeline {
     stage('Build') {
       steps {
         checkout scm
-        sh 'export GO111MODULE=off'
+        
         sh 'go build main.go'
         
       }
