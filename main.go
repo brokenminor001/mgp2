@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"./dbconnect"
-	"./mgp"
-	"./sendmail"
+	"github.com/brokenminor001/mgp2/dbconnect"
+	"github.com/brokenminor001/mgp2/mgp"
+	"github.com/brokenminor001/mgp2/sendmail"
 
 	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
