@@ -18,6 +18,7 @@ pipeline {
      image 'golang:latest'
         }
     }
+  }
   tools { go '1.20' }
   stages {
 
@@ -47,6 +48,6 @@ pipeline {
     }
       
   }
-  }
+  
 }
 }
