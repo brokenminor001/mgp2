@@ -8,8 +8,18 @@ pipeline {
 
   }
   agent any
+  
   tools { go '1.20' }
   stages {
+
+stage("Prepare container") {
+  agent {
+    docker {
+      image 'golang:latest'
+      
+    }
+  }
+
     stage('Build') {
       steps {
         checkout scm
@@ -36,3 +46,4 @@ pipeline {
       
   }
   }
+}
