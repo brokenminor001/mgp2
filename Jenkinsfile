@@ -12,12 +12,9 @@ pipeline {
   stages {
 
   stage("Prepare container") {
-   steps {
-    docker {
-      image 'golang:latest'
-      
-    }
-  }
+   docker {
+     image 'golang:latest'
+      }
   
   tools { go '1.20' }
   stages {
