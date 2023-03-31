@@ -20,9 +20,7 @@ pipeline {
     }
        stage('Push images') {
       agent any
-      when {
-        branch 'master'
-      }
+     
       steps {
         script {
           def dockerImage = docker.build("${env.IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
