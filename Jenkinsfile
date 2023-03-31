@@ -12,11 +12,11 @@ pipeline {
   stages {
 
   stage("Prepare container") {
-    agent any
-    steps {
+   agent {
+        docker {
   
      image 'golang:latest'
-      
+        }
     }
   tools { go '1.20' }
   stages {
