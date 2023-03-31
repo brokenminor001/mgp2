@@ -12,6 +12,7 @@ pipeline {
   stages {
 
   stage("Prepare container") {
+    agent any
     steps {
   
      image 'golang:latest'
