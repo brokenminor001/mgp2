@@ -7,18 +7,21 @@ pipeline {
     DOCKERFILE_NAME = "Dockerfile"
 
   }
-  agent any
   
-  tools { go '1.20' }
+  agent any
   stages {
 
-stage("Prepare container") {
+  stage("Prepare container") {
   agent {
     docker {
       image 'golang:latest'
       
     }
   }
+  
+  tools { go '1.20' }
+  stages {
+
 
     stage('Build') {
       steps {
@@ -46,4 +49,5 @@ stage("Prepare container") {
       
   }
   }
+}
 }
